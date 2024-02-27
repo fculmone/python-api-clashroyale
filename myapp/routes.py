@@ -1,10 +1,11 @@
-from flask import Flask, request, jsonify
-from clan_data import ClanData
+from flask import Blueprint, request, jsonify
+
+from myapp.clan_data import ClanData
 
 
-app = Flask(__name__)
+main = Blueprint('main', __name__)
 
-@app.route("/get-clan/<clan_tag>")
+@main.route("/get-clan/<clan_tag>")
 def get_clan(clan_tag):
   clan_data = {
     "clan_tag": clan_tag,
@@ -12,17 +13,12 @@ def get_clan(clan_tag):
     "name": "Canadian Power",
     "leader": "Mega Voltron"
   }
-
   test = ClanData(clan_tag)
-
-  clan_data["test"] =  test.getClanData()
-
+  clan_data["test"] = test.getClanData()
   return jsonify(clan_data), 200
 
 
-@app.route("/healthy-check")
+@main.route("/healthy-check")
 def healthy_check(): 
   return "OK :)", 200
 
-if __name__ == "__main__":
-  app.run(debug=True)
