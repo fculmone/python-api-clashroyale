@@ -1,5 +1,4 @@
 from flask import Blueprint, request, jsonify
-
 from myapp.clan_data import ClanData
 
 
