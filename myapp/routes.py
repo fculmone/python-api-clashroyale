@@ -12,7 +12,6 @@ def get_clan(clan_tag):
 
 
 @main.route("/healthy-check")
-def healthy_check(): 
-  print("hi")
+def healthy_check():
   return "OK :)", 200
 

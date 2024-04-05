@@ -48,6 +48,8 @@ class ClanData:
 
   def __organizeData(self, data):
     retval = []
+    table_data = []
+    graph_data = []
     for item in data[0]['items']:
       currentPlayer = {
         "Name": "",
@@ -58,11 +60,18 @@ class ClanData:
         "Donations": 0,
         "Donations Received": 0
       }
+      currentPlayerWarHistory = {
+        "Name": "",
+        "War Weeks": [],
+        "War Points": []
+      }
 
       currentPlayer["Name"] = item["name"]
       currentPlayer["Trophies"] = item["trophies"]
       currentPlayer["Donations"] = item["donations"]
       currentPlayer["Donations Received"] = item["donationsReceived"]
+
+      currentPlayerWarHistory["Name"] = item["name"]
 
       # Get the data for Points, Avg Points, and Weeks
       points = 0
@@ -74,6 +83,8 @@ class ClanData:
             if participant["tag"] == item["tag"] and standing["clan"]["tag"][1:] == self.clan_tag[3:]:
               weeks += 1
               points += participant["fame"]
+              currentPlayerWarHistory["War Weeks"].append(str(war["seasonId"]) + '-' + str(war["sectionIndex"]))
+              currentPlayerWarHistory["War Points"].append(participant["fame"])
               found_player = True
               break
           if found_player:
@@ -88,8 +99,11 @@ class ClanData:
         
       currentPlayer["Weeks"] = weeks
 
-      retval.append(currentPlayer)
+      table_data.append(currentPlayer)
+      graph_data.append(currentPlayerWarHistory)
 
+    retval.append(table_data)
+    retval.append(graph_data)  
     return retval
  
   
