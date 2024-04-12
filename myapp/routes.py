@@ -10,6 +10,12 @@ def get_clan(clan_tag):
   clan_data = clan.getClanData()
   return jsonify(clan_data), 200
 
+@main.route("/get-clan-probability/<clan_tag>")
+def get_clan_probability(clan_tag):
+  clan = ClanData(clan_tag)
+  clan_data = clan.getClanProbabilityData()
+  return jsonify(clan_data), 200
+
 
 @main.route("/healthy-check")
 def healthy_check():
