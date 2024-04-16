@@ -155,6 +155,7 @@ class ClanData:
     clan_fame_history = []
     data = self.__getRiverraceLog(key)
     clan_name = ""
+    most_recent_week = [data['items'][0]['seasonId'], data['items'][0]['sectionIndex']]
     for war in data['items']:
       for standing in war['standings']:
         if standing.get("clan").get("tag")[1:] == self.clan_tag[3:]:
@@ -164,7 +165,7 @@ class ClanData:
             total_fame += participant.get('fame')
           clan_fame_history.append(total_fame)
           
-    return [clan_fame_history, clan_name]
+    return [clan_fame_history, clan_name, most_recent_week]
   
   
   def __calcProbabilitiesForFive(self, main_clan_fame_history, other_clan_fame_history):
@@ -409,7 +410,12 @@ class ClanData:
 
 
   def __calcProbabilities(self, key):
-    curr_riverrace = self.__getCurrentRiverrace(key)
+    curr_rivverrace = ""
+    try:
+      curr_riverrace = self.__getCurrentRiverrace(key)
+    except:
+      return self.clan_tag + " clan not in riverrace"
+    
 
     main_clan_fame_history = self.__getClanFameHistory(key)
 
@@ -424,10 +430,10 @@ class ClanData:
     probabilities = []
 
     is_one_clan_historyless = False
-    if len(main_clan_fame_history) == 0:
+    if len(main_clan_fame_history[0]) == 0:
       is_one_clan_historyless = True
     for clan_history in other_clans_fame_history:
-      if len(clan_history) == 0:
+      if len(clan_history[0]) == 0:
         is_one_clan_historyless = True
     
     if is_one_clan_historyless:
@@ -443,8 +449,37 @@ class ClanData:
         probabilities = self.__calcProbabilitiesForTwo(main_clan_fame_history, other_clans_fame_history)
       else:
         probabilities = []
+
+    #organize the graph data so that all the histories are of length 10
+
+    #create lables for the war history
+    seasonID = main_clan_fame_history[2][0]
+    sectionIndex = main_clan_fame_history[2][1]
+    lables = []
+    while len(lables) < 10:
+      curr_label = str(seasonID) + '-' + str(sectionIndex)
+      lables.append(curr_label)
+      if sectionIndex != 0:
+        sectionIndex -= 1
+      else:
+        seasonID -= 1
+        sectionIndex = 3
+    
+    #remove the most recent clan label from the clan data cause its no longer needed
+    main_clan_fame_history.pop()
+    for clan in other_clans_fame_history:
+      clan.pop()
+
+    while len(main_clan_fame_history[0]) < 10:
+      main_clan_fame_history[0].append(0)
+
+    for clan in other_clans_fame_history:
+      while len(clan[0]) < 10:
+        clan[0].append(0)
+
+
       
-    return [probabilities, main_clan_fame_history, other_clans_fame_history]
+    return [probabilities, main_clan_fame_history, other_clans_fame_history, lables]
     
     
     
@@ -469,7 +504,7 @@ class ClanData:
   def getClanProbabilityData(self):
     load_dotenv()
     CLASH_API_KEY = os.environ['CLASH_API_KEY']
-    
+    self.__calcProbabilities(CLASH_API_KEY)
     try:
       return self.__calcProbabilities(CLASH_API_KEY)
     except Exception as e: 
