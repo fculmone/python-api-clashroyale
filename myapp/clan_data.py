@@ -54,6 +54,7 @@ class ClanData:
     retval = []
     table_data = []
     graph_data = []
+    clan_name = ""
     for item in data[0]['items']:
       currentPlayer = {
         "Name": "",
@@ -83,6 +84,8 @@ class ClanData:
       for war in data[1]["items"]:
         found_player = False
         for standing in war["standings"]:
+          if standing["clan"]["tag"][1:] == self.clan_tag[3:] and clan_name == "":
+            clan_name = standing["clan"]["name"]
           for participant in standing["clan"]["participants"]:
             if participant["tag"] == item["tag"] and standing["clan"]["tag"][1:] == self.clan_tag[3:]:
               weeks += 1
@@ -107,7 +110,8 @@ class ClanData:
       graph_data.append(currentPlayerWarHistory)
 
     retval.append(table_data)
-    retval.append(graph_data)  
+    retval.append(graph_data)
+    retval.append(clan_name) 
     return retval
  
 
@@ -477,7 +481,12 @@ class ClanData:
       while len(clan[0]) < 10:
         clan[0].append(0)
 
+    lables.reverse()
 
+    main_clan_fame_history[0].reverse()
+
+    for clan in other_clans_fame_history:
+      clan[0].reverse()
       
     return [probabilities, main_clan_fame_history, other_clans_fame_history, lables]
     
