@@ -222,16 +222,15 @@ class ClanData:
     prob = 1 - norm.cdf(z_score)
     cdfs["a>e"] = prob
 
-    
-    print(cdfs)
+    #print(cdfs)
     first_prob = cdfs["a>b"] * cdfs["a>c"] * cdfs["a>d"] * cdfs["a>e"]
-    print(first_prob)
+    #print(first_prob)
 
     second_prob = (1 - cdfs["a>b"]) * cdfs["a>c"] * cdfs["a>d"] * cdfs["a>e"]
     second_prob += (1 - cdfs["a>c"]) * cdfs["a>b"] * cdfs["a>d"] * cdfs["a>e"]
     second_prob += (1 - cdfs["a>d"]) * cdfs["a>c"] * cdfs["a>b"] * cdfs["a>e"]
     second_prob += (1 - cdfs["a>e"]) * cdfs["a>c"] * cdfs["a>d"] * cdfs["a>b"]
-    print(second_prob)
+    #print(second_prob)
 
     third_prob = (1 - cdfs["a>b"]) * (1 - cdfs["a>c"]) * cdfs["a>d"] * cdfs["a>e"]
     third_prob += (1 - cdfs["a>b"]) * (1 - cdfs["a>d"]) * cdfs["a>c"] * cdfs["a>e"]
@@ -239,20 +238,20 @@ class ClanData:
     third_prob += (1 - cdfs["a>c"]) * (1 - cdfs["a>d"]) * cdfs["a>b"] * cdfs["a>e"]
     third_prob += (1 - cdfs["a>c"]) * (1 - cdfs["a>e"]) * cdfs["a>b"] * cdfs["a>d"]
     third_prob += (1 - cdfs["a>d"]) * (1 - cdfs["a>e"]) * cdfs["a>b"] * cdfs["a>c"]
-    print(third_prob)
+    #print(third_prob)
 
     fourth_prob = cdfs["a>b"] * (1 - cdfs["a>c"]) * (1 - cdfs["a>d"]) * (1 - cdfs["a>e"])
     fourth_prob += cdfs["a>c"] * (1 - cdfs["a>b"]) * (1 - cdfs["a>d"]) * (1 - cdfs["a>e"])
     fourth_prob += cdfs["a>d"] * (1 - cdfs["a>c"]) * (1 - cdfs["a>b"]) * (1 - cdfs["a>e"])
     fourth_prob += cdfs["a>e"] * (1 - cdfs["a>c"]) * (1 - cdfs["a>d"]) * (1 - cdfs["a>b"])
-    print(fourth_prob)
+    #print(fourth_prob)
 
     fifth_prob = (1 - cdfs["a>b"]) * (1 - cdfs["a>c"]) * (1 - cdfs["a>d"]) * (1 - cdfs["a>e"])
-    print(fifth_prob)
+    #print(fifth_prob)
 
     #total_prob should sum to 1
     total_prob = first_prob + second_prob + third_prob + fourth_prob + fifth_prob
-    print(total_prob)
+    #print(total_prob)
 
     return [first_prob, second_prob, third_prob, fourth_prob, fifth_prob]
 
@@ -299,27 +298,27 @@ class ClanData:
     cdfs["a>d"] = prob
 
     
-    print(cdfs)
+    #print(cdfs)
     first_prob = cdfs["a>b"] * cdfs["a>c"] * cdfs["a>d"]
-    print(first_prob)
+    #print(first_prob)
 
     second_prob = (1 - cdfs["a>b"]) * cdfs["a>c"] * cdfs["a>d"]
     second_prob += (1 - cdfs["a>c"]) * cdfs["a>b"] * cdfs["a>d"]
     second_prob += (1 - cdfs["a>d"]) * cdfs["a>c"] * cdfs["a>b"]
-    print(second_prob)
+    #print(second_prob)
 
     third_prob = (1 - cdfs["a>b"]) * (1 - cdfs["a>c"]) * cdfs["a>d"]
     third_prob += (1 - cdfs["a>b"]) * (1 - cdfs["a>d"]) * cdfs["a>c"]
     third_prob += (1 - cdfs["a>c"]) * (1 - cdfs["a>d"]) * cdfs["a>b"]
-    print(third_prob)
+    #print(third_prob)
 
 
     fourth_prob = (1 - cdfs["a>b"]) * (1 - cdfs["a>c"]) * (1 - cdfs["a>d"])
-    print(fourth_prob)
+    #print(fourth_prob)
 
     #total_prob should sum to 1
     total_prob = first_prob + second_prob + third_prob + fourth_prob
-    print(total_prob)
+    #print(total_prob)
 
     return [first_prob, second_prob, third_prob, fourth_prob]
 
@@ -357,20 +356,20 @@ class ClanData:
     cdfs["a>c"] = prob
 
     
-    print(cdfs)
+    #print(cdfs)
     first_prob = cdfs["a>b"] * cdfs["a>c"]
-    print(first_prob)
+    #print(first_prob)
 
     second_prob = (1 - cdfs["a>b"]) * cdfs["a>c"]
     second_prob += (1 - cdfs["a>c"]) * cdfs["a>b"]
-    print(second_prob)
+    #print(second_prob)
 
     third_prob = (1 - cdfs["a>b"]) * (1 - cdfs["a>c"])
-    print(third_prob)
+    #print(third_prob)
 
     #total_prob should sum to 1
     total_prob = first_prob + second_prob + third_prob
-    print(total_prob)
+    #print(total_prob)
 
     return [first_prob, second_prob, third_prob]
 
@@ -399,16 +398,16 @@ class ClanData:
     cdfs["a>b"] = prob
 
     
-    print(cdfs)
+    #print(cdfs)
     first_prob = cdfs["a>b"]
-    print(first_prob)
+    #print(first_prob)
 
     second_prob = (1 - cdfs["a>b"])
-    print(second_prob)
+    #print(second_prob)
 
     #total_prob should sum to 1
     total_prob = first_prob + second_prob
-    print(total_prob)
+    #print(total_prob)
 
     return [first_prob, second_prob]
 
